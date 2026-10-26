@@ -36,7 +36,7 @@ nav{border-top:0;gap:18px;padding-top:12px}
 body { font-family: "TeX Gyre Termes", "Times New Roman", serif; font-size: 17px;line-height: 1.7;}
 h1, h2, h3, h4 {font-family: "TeX Gyre Pagella", "Palatino Linotype", serif;}
 button, select, input, label {font-family: "TeX Gyre Termes", "Times New Roman", serif;}</style></head><body><header><div class="wrap">
-<nav aria-label="Actividades"><button aria-current="page" class="tab active" data-tab="1">1 · Orden temporal</button><button class="tab" data-tab="2">2 · Identifica los componentes</button><button class="tab" data-tab="3">3 · Construye tu propia serie</button><button class="tab" data-tab="4">4 · Desempleo en PR</button></nav></div></header>
+<nav aria-label="Actividades"><button aria-current="page" class="tab active" data-tab="1">1 · Orden temporal</button><button class="tab" data-tab="2">2 · Identifica los componentes</button><button class="tab" data-tab="3">3 · Construye tu propia serie</button></nav></div></header>
 <main class="wrap"><div id="tab1"><section class="intro"><h2>¿Por qué importa el orden temporal?</h2><p>Una serie de tiempo no es simplemente un conjunto de números: el orden en que se observan contiene información.</p></section>
 <section class="panel"><div class="controls"><select id="pattern"><option value="trend">Crecimiento gradual</option><option value="season">Patrón estacional</option></select><button aria-label="Iniciar animación" class="btn" id="play">▶ Reproducir</button><button class="btn secondary" id="shuffle">Orden aleatorio</button><button class="btn secondary" id="restore">Restablecer orden</button></div><div class="charts"><div class="chart-box"><div class="chart-title">A. Orden cronológico original</div><svg aria-label="Gráfica de serie temporal original" id="original" role="img" viewbox="0 0 500 275"></svg></div><div class="chart-box"><div class="chart-title">B. Orden aleatorio</div><svg aria-label="Gráfica de serie temporal reorganizada" id="reordered" role="img" viewbox="0 0 500 275"></svg></div></div><div class="question"><strong>Pregunta</strong><p>¿Las dos gráficas contienen las mismas observaciones? ¿Qué diferencias encuentras entre ellas?</p><button aria-expanded="false" class="btn secondary" id="reveal">Mostrar respuesta</button><div class="answer" id="answer"><p>Sí. Ambas contienen exactamente los mismos 60 valores, pero en distinto orden temporal. Por eso, la media y la desviación estándar no cambian, aunque la forma de la serie sea diferente.</p><div class="stats" style="padding:12px 0 0"><div class="stat"><small>Media muestral</small><b id="mean">—</b></div><div class="stat"><small>Desviación estándar muestral</small><b id="sd">—</b></div><div class="stat"><small>Valores observados</small><b>60</b></div></div><p>Las estadísticas descriptivas no consideran el orden temporal. Un patrón de crecimiento o estacionalidad puede desaparecer al cambiar ese orden.</p></div></div></section></div>
 <div hidden="" id="tab2"><iframe loading="eager" srcdoc="&lt;!doctype html&gt;&lt;html lang=&quot;es&quot;&gt;&lt;head&gt;&lt;meta charset=&quot;utf-8&quot;&gt;&lt;meta name=&quot;viewport&quot; content=&quot;width=device-width,initial-scale=1&quot;&gt;&lt;title&gt;Identifica los componentes | ESTA 4501&lt;/title&gt;&lt;style&gt;
@@ -49,19 +49,12 @@ function draw(progress){const svg=$('chart');svg.replaceChildren();const vals=da
 function reset(){token++;draw(0);$('answer').classList.remove('show');$('reveal').textContent='Mostrar respuesta';$('reveal').setAttribute('aria-expanded','false');$('answerText').innerHTML=descriptions[+$('case').value]}
 $('case').addEventListener('change',reset);$('play').addEventListener('click',()=&gt;{const current=++token;const start=performance.now();function frame(t){if(current!==token)return;const p=Math.min(1,(t-start)/5500);draw(p);if(p&lt;1)requestAnimationFrame(frame)}requestAnimationFrame(frame)});$('reveal').addEventListener('click',()=&gt;{const show=$('answer').classList.toggle('show');$('reveal').textContent=show?'Ocultar respuesta':'Mostrar respuesta';$('reveal').setAttribute('aria-expanded',String(show))});reset();
 &lt;/script&gt;&lt;/body&gt;&lt;/html&gt;
-" style="width:100%;height:850px;border:0;display:block" title="Identifica los componentes"></iframe></div><div hidden="" id="tab4">
+" style="width:100%;height:850px;border:0;display:block" title="Identifica los componentes"></iframe></div><div hidden="" id="tab3">
 <section class="intro"><h2>Componentes de una serie de tiempo</h2></section>
 <section class="panel">
 <div class="controls"><label><input checked="" class="part" type="checkbox" value="trend"/> Tendencia</label><label><input class="part" type="checkbox" value="season"/> Estacionalidad</label><label><input class="part" type="checkbox" value="cycle"/> Ciclo</label><label><input class="part" type="checkbox" value="noise"/> Componente aleatorio</label><label><input id="auto2" type="checkbox"/> Autocorrelación</label><button class="btn" id="play2">▶ Reproducir</button></div>
 <div class="chart-box" style="max-width:850px;margin:0 auto 22px"><div class="chart-title">Serie de tiempo resultante</div><svg aria-label="Serie de tiempo construida con los componentes seleccionados" id="compTotal" role="img" viewbox="0 0 800 340"></svg></div>
 <div class="question"><strong>Pregunta</strong><p>¿Cómo cambia el comportamiento de la serie cuando incorporamos o eliminamos componentes?</p><button aria-expanded="false" class="btn secondary" id="reveal2">Mostrar respuesta</button><div class="answer" id="answer2"><ul id="explanation2"></ul></div></div>
-</section></div>
-<div hidden="" id="tab3">
-<section class="intro"><h2>Desempleo en Puerto Rico: la importancia de los datos históricos</h2><p>Examina primero los datos recientes y luego amplía el periodo de observación.</p></section>
-<section class="panel">
-<div class="controls"><select aria-label="Periodo de observación" id="period3"><option value="2024">2024–2026</option><option value="2010">2010–2026</option></select><button class="btn" id="play3">▶ Reproducir</button></div>
-<div class="chart-box" style="max-width:850px;margin:0 auto 22px"><div class="chart-title">Tasa de desempleo mensual en Puerto Rico (%)</div><svg aria-label="Tasa de desempleo mensual en Puerto Rico" id="unemployment3" role="img" viewbox="0 0 800 340"></svg><p style="font-size:12px;color:#65717b;margin:10px 0 0">Fuente: U.S. Bureau of Labor Statistics, <em>Unemployment Rate in Puerto Rico</em> (PRURN), consultada en <a href="https://fred.stlouisfed.org/series/PRURN" rel="noopener noreferrer" style="color:#173B68;text-decoration:underline;text-underline-offset:3px;font-weight:600" target="_blank">FRED</a> (Federal Reserve Bank of St. Louis).</p></div>
-<div class="question"><strong>Pregunta</strong><p>¿Qué cambia en tu interpretación del desempleo en Puerto Rico al comparar 2024–2026 con 2010–2026? ¿Por qué conviene analizar los datos históricos y no solamente los recientes?</p><button aria-expanded="false" class="btn secondary" id="reveal3">Mostrar respuesta</button><div class="answer" id="answer3"><p>Los datos recientes muestran solo una parte de la historia. Al ampliar el periodo hasta 2010, observamos que la tasa de desempleo era mucho más alta y que, pese a las fluctuaciones, ha disminuido considerablemente a largo plazo. Por eso, analizar una serie de tiempo exige considerar suficiente información histórica antes de sacar conclusiones.</p></div></div>
 </section></div>
 </main>
 <script>
@@ -79,9 +72,9 @@ tabs.forEach(button=>button.addEventListener('click',()=>{
  const target=button.dataset.tab;
  if(location.hash!==`#actividad-${target}`)history.replaceState(null,'',`#actividad-${target}`);
  tabs.forEach(b=>{b.classList.toggle('active',b.dataset.tab===target);if(b.dataset.tab===target)b.setAttribute('aria-current','page');else b.removeAttribute('aria-current')});
- $('tab1').hidden=target!=='1';$('tab2').hidden=target!=='2';$('tab3').hidden=target!=='3';$('tab4').hidden=target!=='4';
- animationToken++;animationToken2++;animationToken3++;
- if(target==='3')hide2();if(target==='4')hide3();
+ $('tab1').hidden=target!=='1';$('tab2').hidden=target!=='2';$('tab3').hidden=target!=='3';
+ animationToken++;animationToken2++;
+ if(target==='3')hide2();
 }));
 let animationToken2=0;
 const compNoise=Array.from({length:72},(_,i)=>(rand(i+201)-.5)*24);
@@ -94,7 +87,7 @@ if(progress>=0){const end=Math.min(71,Math.max(0,progress*71)),whole=Math.floor(
 svg.append(el('text',{x:W/2,y:H-1,'text-anchor':'middle',fill:'#65717b','font-size':14},'Periodo'))}
 function hide2(){animationToken2++;plot2(-1);$('answer2').classList.remove('visible');$('reveal2').textContent='Mostrar respuesta';$('reveal2').setAttribute('aria-expanded','false')}
 document.querySelectorAll('.part').forEach(c=>c.addEventListener('change',hide2));$('auto2').addEventListener('change',hide2);
-$('play2').addEventListener('click',()=>{const token=++animationToken2,duration=6500;let start=null;function frame(now){if(token!==animationToken2||$('tab2').hidden)return;if(start===null)start=now;const p=Math.min(1,(now-start)/duration);plot2(p);if(p<1)requestAnimationFrame(frame)}requestAnimationFrame(frame)});
+$('play2').addEventListener('click',()=>{const token=++animationToken2,duration=6500;let start=null;function frame(now){if(token!==animationToken2||$('tab3').hidden)return;if(start===null)start=now;const p=Math.min(1,(now-start)/duration);plot2(p);if(p<1)requestAnimationFrame(frame)}requestAnimationFrame(frame)});
 $('reveal2').addEventListener('click',()=>{
  const selected=[...document.querySelectorAll('.part:checked')].map(c=>c.value);
  const desc={
@@ -119,36 +112,9 @@ $('reveal2').addEventListener('click',()=>{
 });
 plot2(-1);
 
-// Serie PRURN: tasa de desempleo mensual, sin ajuste estacional (BLS/FRED).
-const prurn3=[['2010-01',16.0],['2010-02',16.1],['2010-03',16.3],['2010-04',17.2],['2010-05',17.1],['2010-06',16.9],['2010-07',17.3],['2010-08',16.4],['2010-09',16.5],['2010-10',16.0],['2010-11',15.6],['2010-12',14.9],['2011-01',15.9],['2011-02',16.3],['2011-03',17.1],['2011-04',16.5],['2011-05',16.3],['2011-06',15.4],['2011-07',16.5],['2011-08',16.4],['2011-09',15.6],['2011-10',16.5],['2011-11',15.4],['2011-12',13.4],['2012-01',15.5],['2012-02',15.2],['2012-03',15.1],['2012-04',14.5],['2012-05',13.7],['2012-06',14.2],['2012-07',15.1],['2012-08',14.4],['2012-09',14.3],['2012-10',14.5],['2012-11',13.5],['2012-12',13.6],['2013-01',14.9],['2013-02',13.9],['2013-03',13.5],['2013-04',13.0],['2013-05',13.5],['2013-06',13.8],['2013-07',14.7],['2013-08',14.9],['2013-09',15.1],['2013-10',14.7],['2013-11',14.1],['2013-12',15.4],['2014-01',14.4],['2014-02',14.6],['2014-03',14.2],['2014-04',13.4],['2014-05',13.6],['2014-06',12.8],['2014-07',13.9],['2014-08',15.3],['2014-09',15.1],['2014-10',13.7],['2014-11',13.6],['2014-12',12.0],['2015-01',10.8],['2015-02',11.2],['2015-03',12.5],['2015-04',12.6],['2015-05',12.3],['2015-06',12.6],['2015-07',11.1],['2015-08',12.3],['2015-09',12.2],['2015-10',14.1],['2015-11',11.7],['2015-12',10.3],['2016-01',11.1],['2016-02',11.6],['2016-03',12.2],['2016-04',11.4],['2016-05',11.2],['2016-06',10.8],['2016-07',12.4],['2016-08',12.0],['2016-09',13.1],['2016-10',12.5],['2016-11',10.9],['2016-12',12.0],['2017-01',11.6],['2017-02',11.3],['2017-03',11.0],['2017-04',11.5],['2017-05',10.3],['2017-06',9.4],['2017-07',10.5],['2017-08',11.8],['2017-09',11.0],['2017-10',11.4],['2017-11',10.4],['2017-12',9.9],['2018-01',10.7],['2018-02',10.0],['2018-03',9.8],['2018-04',9.4],['2018-05',9.3],['2018-06',9.2],['2018-07',9.5],['2018-08',9.2],['2018-09',8.7],['2018-10',8.3],['2018-11',7.7],['2018-12',8.5],['2019-01',8.0],['2019-02',9.0],['2019-03',9.3],['2019-04',7.8],['2019-05',7.8],['2019-06',8.0],['2019-07',7.9],['2019-08',7.0],['2019-09',8.2],['2019-10',9.0],['2019-11',8.5],['2019-12',9.2],['2020-01',9.6],['2020-02',7.8],['2020-03',null],['2020-04',null],['2020-05',9.6],['2020-06',8.5],['2020-07',7.3],['2020-08',8.5],['2020-09',9.4],['2020-10',8.5],['2020-11',9.5],['2020-12',10.6],['2021-01',9.1],['2021-02',7.9],['2021-03',7.4],['2021-04',7.1],['2021-05',8.1],['2021-06',8.2],['2021-07',9.3],['2021-08',9.2],['2021-09',7.9],['2021-10',7.1],['2021-11',7.3],['2021-12',6.7],['2022-01',6.4],['2022-02',6.0],['2022-03',5.8],['2022-04',5.8],['2022-05',5.8],['2022-06',5.8],['2022-07',5.7],['2022-08',6.0],['2022-09',6.3],['2022-10',6.5],['2022-11',6.2],['2022-12',6.0],['2023-01',5.6],['2023-02',5.9],['2023-03',5.8],['2023-04',5.6],['2023-05',6.1],['2023-06',6.2],['2023-07',6.8],['2023-08',6.1],['2023-09',5.6],['2023-10',5.5],['2023-11',5.7],['2023-12',5.8],['2024-01',5.8],['2024-02',5.8],['2024-03',5.7],['2024-04',5.5],['2024-05',5.5],['2024-06',5.7],['2024-07',6.1],['2024-08',5.7],['2024-09',5.5],['2024-10',5.5],['2024-11',5.4],['2024-12',5.4],['2025-01',5.3],['2025-02',5.3],['2025-03',5.2],['2025-04',5.2],['2025-05',5.1],['2025-06',5.6],['2025-07',5.7],['2025-08',6.3],['2025-09',6.0],['2025-10',5.7],['2025-11',5.6],['2025-12',5.6],['2026-01',5.6],['2026-02',5.4],['2026-03',5.4],['2026-04',5.3],['2026-05',5.5],['2026-06',6.4],['2026-07',6.8],['2026-08',6.5],['2026-09',6.4]];
-let animationToken3=0;
-function data3(){return prurn3.filter(d=>Number(d[0].slice(0,4))>=Number($('period3').value));}
-function plot3(progress=-1){
- const svg=$('unemployment3');svg.replaceChildren();const W=800,H=340,L=58,R=20,T=20,B=48;
- const d=data3(),xx=i=>L+(W-L-R)*i/(d.length-1),max=18,min=4,yy=v=>T+(max-v)*(H-T-B)/(max-min);
- for(let v=4;v<=18;v+=2){const y=yy(v);svg.append(el('line',{x1:L,y1:y,x2:W-R,y2:y,stroke:'#e3e7ea'}));svg.append(el('text',{x:L-10,y:y+5,'text-anchor':'end',fill:'#65717b','font-size':14},String(v)))}
- // Marcar los intervalos mensuales sin observaciones, sin interpolarlos.
- d.forEach((r,i)=>{if(r[1]!==null)return;
-   const left=i===0?L:(xx(i-1)+xx(i))/2;
-   const right=i===d.length-1?W-R:(xx(i)+xx(i+1))/2;
-   svg.append(el('rect',{x:left,y:T,width:right-left,height:H-T-B,fill:'#d8dde2',opacity:0.75}));
- });
- svg.append(el('line',{x1:L,y1:T,x2:L,y2:H-B,stroke:'#aeb8be'}));svg.append(el('line',{x1:L,y1:H-B,x2:W-R,y2:H-B,stroke:'#aeb8be'}));
- d.forEach((r,i)=>{if(r[0].endsWith('-01')&&(d.length<100||Number(r[0].slice(0,4))%2===0))svg.append(el('text',{x:xx(i),y:H-21,'text-anchor':'middle',fill:'#65717b','font-size':13},r[0].slice(0,4)))});
- svg.append(el('text',{x:W/2,y:H-3,'text-anchor':'middle',fill:'#65717b','font-size':14},'Año'));
- if(progress<0)return;
- const last=Math.min(d.length-1,Math.floor(progress*(d.length-1)));let segment=[];
- function flush(){if(segment.length>1)svg.append(el('polyline',{points:segment.join(' '),fill:'none',stroke:'#16804A','stroke-width':3,'stroke-linejoin':'round','stroke-linecap':'round'}));segment=[]}
- for(let i=0;i<=last;i++){if(d[i][1]===null){flush();continue;}segment.push(xx(i)+','+yy(d[i][1]))}flush();
-}
-function hide3(){animationToken3++;plot3(-1);$('answer3').classList.remove('visible');$('reveal3').textContent='Mostrar respuesta';$('reveal3').setAttribute('aria-expanded','false')}
-$('period3').addEventListener('change',hide3);
-$('play3').addEventListener('click',()=>{const token=++animationToken3,duration=6500;let start=null;function frame(now){if(token!==animationToken3||$('tab3').hidden)return;if(start===null)start=now;const p=Math.min(1,(now-start)/duration);plot3(p);if(p<1)requestAnimationFrame(frame)}requestAnimationFrame(frame)});
-$('reveal3').addEventListener('click',()=>{const open=$('answer3').classList.toggle('visible');$('reveal3').textContent=open?'Ocultar respuesta':'Mostrar respuesta';$('reveal3').setAttribute('aria-expanded',String(open))});
-plot3(-1);
 // Abrir directamente la pestaña indicada en el enlace (GitHub Pages).
 function openLinkedActivity(){
- const match=location.hash.match(/^#actividad-([1-4])$/);
+ const match=location.hash.match(/^#actividad-([1-3])$/);
  if(match){const button=document.querySelector(`[data-tab="${match[1]}"]`);if(button)button.click();}
 }
 window.addEventListener('hashchange',openLinkedActivity);
